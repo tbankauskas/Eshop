@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Manufacturers">
+          <Key>
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ManufacturerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OSSystems">
+          <Key>
+            <PropertyRef Name="OSSystemId" />
+          </Key>
+          <Property Name="OSSystemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OS" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Phones">
+          <Key>
+            <PropertyRef Name="PhoneId" />
+          </Key>
+          <Property Name="PhoneId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="numeric" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="PhoneSpecificationId" Type="int" Nullable="false" />
+          <Property Name="SmallImage" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LargeImage" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhoneSpecifications">
+          <Key>
+            <PropertyRef Name="PhoneSpecificationId" />
+          </Key>
+          <Property Name="PhoneSpecificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManufacturerId" Type="int" Nullable="false" />
+          <Property Name="OSSystemId" Type="int" Nullable="false" />
+          <Property Name="Storage" Type="int" Nullable="false" />
+          <Property Name="Camera" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Phones_PhoneSpecifications">
+          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="1" />
+          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneSpecifications">
+              <PropertyRef Name="PhoneSpecificationId" />
+            </Principal>
+            <Dependent Role="Phones">
+              <PropertyRef Name="PhoneSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhoneSpecifications_Manufacturers">
+          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
+          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturers">
+              <PropertyRef Name="ManufacturerId" />
+            </Principal>
+            <Dependent Role="PhoneSpecifications">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhoneSpecifications_OSSystems">
+          <End Role="OSSystems" Type="Self.OSSystems" Multiplicity="1" />
+          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OSSystems">
+              <PropertyRef Name="OSSystemId" />
+            </Principal>
+            <Dependent Role="PhoneSpecifications">
+              <PropertyRef Name="OSSystemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OSSystems" EntityType="Self.OSSystems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phones" EntityType="Self.Phones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhoneSpecifications" EntityType="Self.PhoneSpecifications" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Phones_PhoneSpecifications" Association="Self.FK_Phones_PhoneSpecifications">
+            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
+            <End Role="Phones" EntitySet="Phones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneSpecifications_Manufacturers" Association="Self.FK_PhoneSpecifications_Manufacturers">
+            <End Role="Manufacturers" EntitySet="Manufacturers" />
+            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneSpecifications_OSSystems" Association="Self.FK_PhoneSpecifications_OSSystems">
+            <End Role="OSSystems" EntitySet="OSSystems" />
+            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Manufacturers">
+          <Key>
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ManufacturerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PhoneSpecifications" Relationship="Self.FK_PhoneSpecifications_Manufacturers" FromRole="Manufacturers" ToRole="PhoneSpecifications" />
+        </EntityType>
+        <EntityType Name="OSSystems">
+          <Key>
+            <PropertyRef Name="OSSystemId" />
+          </Key>
+          <Property Name="OSSystemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PhoneSpecifications" Relationship="Self.FK_PhoneSpecifications_OSSystems" FromRole="OSSystems" ToRole="PhoneSpecifications" />
+        </EntityType>
+        <EntityType Name="Phones">
+          <Key>
+            <PropertyRef Name="PhoneId" />
+          </Key>
+          <Property Name="PhoneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="PhoneSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="SmallImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LargeImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PhoneSpecifications" Relationship="Self.FK_Phones_PhoneSpecifications" FromRole="Phones" ToRole="PhoneSpecifications" />
+        </EntityType>
+        <EntityType Name="PhoneSpecifications">
+          <Key>
+            <PropertyRef Name="PhoneSpecificationId" />
+          </Key>
+          <Property Name="PhoneSpecificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+          <Property Name="OSSystemId" Type="Int32" Nullable="false" />
+          <Property Name="Storage" Type="Int32" Nullable="false" />
+          <Property Name="Camera" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Manufacturers" Relationship="Self.FK_PhoneSpecifications_Manufacturers" FromRole="PhoneSpecifications" ToRole="Manufacturers" />
+          <NavigationProperty Name="OSSystems" Relationship="Self.FK_PhoneSpecifications_OSSystems" FromRole="PhoneSpecifications" ToRole="OSSystems" />
+          <NavigationProperty Name="Phones" Relationship="Self.FK_Phones_PhoneSpecifications" FromRole="PhoneSpecifications" ToRole="Phones" />
+        </EntityType>
+        <Association Name="FK_PhoneSpecifications_Manufacturers">
+          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
+          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturers">
+              <PropertyRef Name="ManufacturerId" />
+            </Principal>
+            <Dependent Role="PhoneSpecifications">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhoneSpecifications_OSSystems">
+          <End Role="OSSystems" Type="Self.OSSystems" Multiplicity="1" />
+          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OSSystems">
+              <PropertyRef Name="OSSystemId" />
+            </Principal>
+            <Dependent Role="PhoneSpecifications">
+              <PropertyRef Name="OSSystemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phones_PhoneSpecifications">
+          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="1" />
+          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneSpecifications">
+              <PropertyRef Name="PhoneSpecificationId" />
+            </Principal>
+            <Dependent Role="Phones">
+              <PropertyRef Name="PhoneSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" />
+          <EntitySet Name="OSSystems" EntityType="Self.OSSystems" />
+          <EntitySet Name="Phones" EntityType="Self.Phones" />
+          <EntitySet Name="PhoneSpecifications" EntityType="Self.PhoneSpecifications" />
+          <AssociationSet Name="FK_PhoneSpecifications_Manufacturers" Association="Self.FK_PhoneSpecifications_Manufacturers">
+            <End Role="Manufacturers" EntitySet="Manufacturers" />
+            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneSpecifications_OSSystems" Association="Self.FK_PhoneSpecifications_OSSystems">
+            <End Role="OSSystems" EntitySet="OSSystems" />
+            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phones_PhoneSpecifications" Association="Self.FK_Phones_PhoneSpecifications">
+            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
+            <End Role="Phones" EntitySet="Phones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="DBModel.Manufacturers">
+              <MappingFragment StoreEntitySet="Manufacturers">
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OSSystems">
+            <EntityTypeMapping TypeName="DBModel.OSSystems">
+              <MappingFragment StoreEntitySet="OSSystems">
+                <ScalarProperty Name="OSSystemId" ColumnName="OSSystemId" />
+                <ScalarProperty Name="OS" ColumnName="OS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phones">
+            <EntityTypeMapping TypeName="DBModel.Phones">
+              <MappingFragment StoreEntitySet="Phones">
+                <ScalarProperty Name="PhoneId" ColumnName="PhoneId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PhoneSpecificationId" ColumnName="PhoneSpecificationId" />
+                <ScalarProperty Name="SmallImage" ColumnName="SmallImage" />
+                <ScalarProperty Name="LargeImage" ColumnName="LargeImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhoneSpecifications">
+            <EntityTypeMapping TypeName="DBModel.PhoneSpecifications">
+              <MappingFragment StoreEntitySet="PhoneSpecifications">
+                <ScalarProperty Name="PhoneSpecificationId" ColumnName="PhoneSpecificationId" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="OSSystemId" ColumnName="OSSystemId" />
+                <ScalarProperty Name="Storage" ColumnName="Storage" />
+                <ScalarProperty Name="Camera" ColumnName="Camera" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
