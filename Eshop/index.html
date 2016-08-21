@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="eshopApp">
 <head lang="en">
     <meta charset="utf-8">
     <title>E-Shop</title>
@@ -9,72 +9,21 @@
     <link href="assets/css/custom.css" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-resource/angular-resource.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/components/filters/filters.module.js"></script>
+    <script src="app/components/filters/filters.component.js"></script>
+    <script src="app/components/products/products.module.js"></script>
+    <script src="app/components/products/products.component.js"></script>
+    <script src="app/services/services.module.js"></script>
+    <script src="app/services/products/products.service.js"></script>
+    <script src="app/services/filters/filters.service.js"></script>
     <script src="assets/js/script.js"></script>
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-static-top">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="main-menu">
-                <ul class="nav navbar-nav" id="main-menu-left">
-                    <li><h1>E-Shop</h1></li>
-                </ul>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="main-content">
-        <div class="all-products page visible">
-            <div class="filters">
-                <form id="formFilters">
-                    <div class="filter-criteria">
-                        <span>Manufacturer</span>
-                        <label><input type="checkbox" name="manufacturer" value="apple">Apple</label>
-                        <label><input type="checkbox" name="manufacturer" value="samsung">Samsung</label>
-                        <label><input type="checkbox" name="manufacturer" value="htc">HTC</label>
-                        <label><input type="checkbox" name="manufacturer" value="nokia">Nokia</label>
-                        <label><input type="checkbox" name="manufacturer" value="zte">ZTE</label>
-                        <label><input type="checkbox" name="manufacturer" value="sony">Sony</label>
-                    </div>
-
-                    <div class="filter-criteria">
-                        <span>Storage</span>
-                        <label><input type="checkbox" value="16" name="storage">16 GB</label>
-                        <label><input type="checkbox" value="32" name="storage">32 GB</label>
-                    </div>
-
-                    <div class="filter-criteria">
-                        <span>OS</span>
-                        <label><input type="checkbox" value="android" name="os">Android</label>
-                        <label><input type="checkbox" value="ios" name="os">iOS</label>
-                        <label><input type="checkbox" value="windows" name="os">Windows</label>
-                    </div>
-                    <div class="filer-buttons">
-                        <button type="button" id="filter" class="btn btn-primary">Filter</button>
-                        <button id="clear_filters" class="btn btn-primary">Clear</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Product in catalog -->
-            <ul id="productList" class="products-list"></ul>
-            <div id="loading" class="busyIndicator"></div>
-        </div>
-        <!-- Product view -->
-        <div class="single-product page">
-
-        </div>
-
-    </div>
-
-    <footer class="bs-docs-footer">
-        <div class="container">
-            <p>
-                <a href="#">Back to top</a>
-            </p>
-        </div>
-    </footer>
+    
 
 </body>
 </html>

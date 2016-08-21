@@ -5,13 +5,38 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="991ad4acc0c649bb8bca291e0f0f2be2" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.Manufacturers" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.OSSystems" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Phones" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.PhoneSpecifications" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="DBModel.FK_PhoneSpecifications_Manufacturers" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK_PhoneSpecifications_OSSystems" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK_Phones_PhoneSpecifications" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBModel.Colors" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="DBModel.FilterTypes" Width="1.5" PointX="0.75" PointY="15.25" />
+        <EntityTypeShape EntityType="DBModel.HDDTypes" Width="1.5" PointX="3" PointY="17.5" />
+        <EntityTypeShape EntityType="DBModel.Manufacturers" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="DBModel.OSSystems" Width="1.5" PointX="0.75" PointY="12.25" />
+        <EntityTypeShape EntityType="DBModel.Products" Width="1.5" PointX="7.5" PointY="12.875" />
+        <EntityTypeShape EntityType="DBModel.ProductSpecifications" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="DBModel.ProductTypeFilterAssigns" Width="1.5" PointX="3" PointY="12.125" />
+        <EntityTypeShape EntityType="DBModel.ProductTypeManufacturerAssigns" Width="1.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="DBModel.ProductTypeOSSystemAssigns" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="DBModel.ProductTypes" Width="1.5" PointX="0.75" PointY="8.875" />
+        <EntityTypeShape EntityType="DBModel.ProductTypeStorageAssigns" Width="1.5" PointX="8" PointY="9" />
+        <EntityTypeShape EntityType="DBModel.RAM" Width="1.5" PointX="3" PointY="3.375" />
+        <EntityTypeShape EntityType="DBModel.ScreenTypes" Width="1.5" PointX="3" PointY="15.125" />
+        <EntityTypeShape EntityType="DBModel.Storages" Width="1.5" PointX="5.75" PointY="5.25" />
+        <AssociationConnector Association="DBModel.FK_ProductSpecifications_Colors" />
+        <AssociationConnector Association="DBModel.FK_ProductTypeFilterAssigns_FilterTypes" />
+        <AssociationConnector Association="DBModel.FK_ProductSpecifications_HDDTypes" />
+        <AssociationConnector Association="DBModel.FK_ProductTypeManufacturerAssigns_Manufacturers" />
+        <AssociationConnector Association="DBModel.FK_ProductTypeOSSystemAssigns_OSSystems" />
+        <AssociationConnector Association="DBModel.FK_Phones_PhoneSpecifications" />
+        <AssociationConnector Association="DBModel.FK_PhoneSpecifications_ProductTypeManufacturerAssigns" />
+        <AssociationConnector Association="DBModel.FK_PhoneSpecifications_ProductTypeOSSystemAssigns" />
+        <AssociationConnector Association="DBModel.FK_ProductSpecifications_ProductTypes" />
+        <AssociationConnector Association="DBModel.FK_ProductSpecifications_ProductTypeStorageAssigns" />
+        <AssociationConnector Association="DBModel.FK_ProductSpecifications_RAM" />
+        <AssociationConnector Association="DBModel.FK_ProductSpecifications_ScreenTypes" />
+        <AssociationConnector Association="DBModel.FK_ProductTypeFilterAssigns_ProductTypes" />
+        <AssociationConnector Association="DBModel.FK_ProductTypeManufacturerAssigns_ProductTypes" />
+        <AssociationConnector Association="DBModel.FK_ProductTypeOSSystemAssigns_ProductTypes" />
+        <AssociationConnector Association="DBModel.FK_ProductTypeStorageAssigns_ProductTypes" />
+        <AssociationConnector Association="DBModel.FK_ProductTypeStorageAssigns_Storages" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

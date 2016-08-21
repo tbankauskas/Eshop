@@ -25,9 +25,20 @@ namespace Eshop.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Colors> Colors { get; set; }
+        public virtual DbSet<FilterTypes> FilterTypes { get; set; }
+        public virtual DbSet<HDDTypes> HDDTypes { get; set; }
         public virtual DbSet<Manufacturers> Manufacturers { get; set; }
         public virtual DbSet<OSSystems> OSSystems { get; set; }
-        public virtual DbSet<Phones> Phones { get; set; }
-        public virtual DbSet<PhoneSpecifications> PhoneSpecifications { get; set; }
+        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<ProductSpecifications> ProductSpecifications { get; set; }
+        public virtual DbSet<ProductTypeFilterAssigns> ProductTypeFilterAssigns { get; set; }
+        public virtual DbSet<ProductTypeManufacturerAssigns> ProductTypeManufacturerAssigns { get; set; }
+        public virtual DbSet<ProductTypeOSSystemAssigns> ProductTypeOSSystemAssigns { get; set; }
+        public virtual DbSet<ProductTypes> ProductTypes { get; set; }
+        public virtual DbSet<ProductTypeStorageAssigns> ProductTypeStorageAssigns { get; set; }
+        public virtual DbSet<RAM> RAM { get; set; }
+        public virtual DbSet<ScreenTypes> ScreenTypes { get; set; }
+        public virtual DbSet<Storages> Storages { get; set; }
     }
 }

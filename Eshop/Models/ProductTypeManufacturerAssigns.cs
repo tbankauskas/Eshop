@@ -12,21 +12,19 @@ namespace Eshop.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PhoneSpecifications
+    public partial class ProductTypeManufacturerAssigns
     {
-        public PhoneSpecifications()
+        public ProductTypeManufacturerAssigns()
         {
-            this.Phones = new HashSet<Phones>();
+            this.ProductSpecifications = new HashSet<ProductSpecifications>();
         }
     
-        public int PhoneSpecificationId { get; set; }
+        public int ProductTypeManufacturerAssignId { get; set; }
+        public int ProductTypeId { get; set; }
         public int ManufacturerId { get; set; }
-        public int OSSystemId { get; set; }
-        public int Storage { get; set; }
-        public int Camera { get; set; }
     
         public virtual Manufacturers Manufacturers { get; set; }
-        public virtual OSSystems OSSystems { get; set; }
-        public virtual ICollection<Phones> Phones { get; set; }
+        public virtual ICollection<ProductSpecifications> ProductSpecifications { get; set; }
+        public virtual ProductTypes ProductTypes { get; set; }
     }
 }

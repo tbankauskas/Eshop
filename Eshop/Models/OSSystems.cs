@@ -16,12 +16,12 @@ namespace Eshop.Models
     {
         public OSSystems()
         {
-            this.PhoneSpecifications = new HashSet<PhoneSpecifications>();
+            this.ProductTypeOSSystemAssigns = new HashSet<ProductTypeOSSystemAssigns>();
         }
     
         public int OSSystemId { get; set; }
         public string OS { get; set; }
     
-        public virtual ICollection<PhoneSpecifications> PhoneSpecifications { get; set; }
+        public virtual ICollection<ProductTypeOSSystemAssigns> ProductTypeOSSystemAssigns { get; set; }
     }
 }

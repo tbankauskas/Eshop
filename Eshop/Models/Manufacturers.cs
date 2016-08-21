@@ -16,12 +16,12 @@ namespace Eshop.Models
     {
         public Manufacturers()
         {
-            this.PhoneSpecifications = new HashSet<PhoneSpecifications>();
+            this.ProductTypeManufacturerAssigns = new HashSet<ProductTypeManufacturerAssigns>();
         }
     
         public int ManufacturerId { get; set; }
         public string Manufacturer { get; set; }
     
-        public virtual ICollection<PhoneSpecifications> PhoneSpecifications { get; set; }
+        public virtual ICollection<ProductTypeManufacturerAssigns> ProductTypeManufacturerAssigns { get; set; }
     }
 }

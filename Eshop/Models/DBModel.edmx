@@ -4,7 +4,28 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Colors">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FilterTypes">
+          <Key>
+            <PropertyRef Name="FilterTypeId" />
+          </Key>
+          <Property Name="FilterTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FilterType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HDDTypes">
+          <Key>
+            <PropertyRef Name="HDDTypeId" />
+          </Key>
+          <Property Name="HDDTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HDDType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Manufacturers">
           <Key>
             <PropertyRef Name="ManufacturerId" />
@@ -19,223 +40,968 @@
           <Property Name="OSSystemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OS" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Phones">
+        <EntityType Name="Products">
           <Key>
-            <PropertyRef Name="PhoneId" />
+            <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="PhoneId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="numeric" Precision="13" Scale="2" Nullable="false" />
-          <Property Name="PhoneSpecificationId" Type="int" Nullable="false" />
-          <Property Name="SmallImage" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="LargeImage" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductSpecificationId" Type="int" Nullable="false" />
+          <Property Name="SmallImage" Type="nvarchar" MaxLength="100" />
+          <Property Name="LargeImage" Type="nvarchar" MaxLength="100" />
         </EntityType>
-        <EntityType Name="PhoneSpecifications">
+        <EntityType Name="ProductSpecifications">
           <Key>
-            <PropertyRef Name="PhoneSpecificationId" />
+            <PropertyRef Name="ProductSpecificationId" />
           </Key>
-          <Property Name="PhoneSpecificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductSpecificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductTypeManufacturerAssignId" Type="int" Nullable="false" />
+          <Property Name="ProductTypeOSSystemAssignId" Type="int" Nullable="false" />
+          <Property Name="ProductTypeStorageAssignId" Type="int" Nullable="false" />
+          <Property Name="Camera" Type="int" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
+          <Property Name="ScreenTypeId" Type="int" />
+          <Property Name="HDDTypeId" Type="int" />
+          <Property Name="RAMId" Type="int" />
+          <Property Name="ColorId" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductTypeFilterAssigns">
+          <Key>
+            <PropertyRef Name="ProductTypeFilterAssignId" />
+          </Key>
+          <Property Name="ProductTypeFilterAssignId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
+          <Property Name="FilterTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductTypeManufacturerAssigns">
+          <Key>
+            <PropertyRef Name="ProductTypeManufacturerAssignId" />
+          </Key>
+          <Property Name="ProductTypeManufacturerAssignId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
           <Property Name="ManufacturerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductTypeOSSystemAssigns">
+          <Key>
+            <PropertyRef Name="ProductTypeOSSystemAssignId" />
+          </Key>
+          <Property Name="ProductTypeOSSystemAssignId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
           <Property Name="OSSystemId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductTypes">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
+          <Property Name="ProductTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductTypeStorageAssigns">
+          <Key>
+            <PropertyRef Name="ProductTypeStorageAssignId" />
+          </Key>
+          <Property Name="ProductTypeStorageAssignId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
+          <Property Name="StorageId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RAM">
+          <Key>
+            <PropertyRef Name="RAMId" />
+          </Key>
+          <Property Name="RAMId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RAM" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScreenTypes">
+          <Key>
+            <PropertyRef Name="ScreenTypeId" />
+          </Key>
+          <Property Name="ScreenTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScreenType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Storages">
+          <Key>
+            <PropertyRef Name="StorageId" />
+          </Key>
+          <Property Name="StorageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Storage" Type="int" Nullable="false" />
-          <Property Name="Camera" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Phones_PhoneSpecifications">
-          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="1" />
-          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PhoneSpecifications">
-              <PropertyRef Name="PhoneSpecificationId" />
+            <Principal Role="ProductSpecifications">
+              <PropertyRef Name="ProductSpecificationId" />
             </Principal>
-            <Dependent Role="Phones">
-              <PropertyRef Name="PhoneSpecificationId" />
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductSpecificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PhoneSpecifications_Manufacturers">
+        <Association Name="FK_PhoneSpecifications_ProductTypeManufacturerAssigns">
+          <End Role="ProductTypeManufacturerAssigns" Type="Self.ProductTypeManufacturerAssigns" Multiplicity="1" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypeManufacturerAssigns">
+              <PropertyRef Name="ProductTypeManufacturerAssignId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ProductTypeManufacturerAssignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhoneSpecifications_ProductTypeOSSystemAssigns">
+          <End Role="ProductTypeOSSystemAssigns" Type="Self.ProductTypeOSSystemAssigns" Multiplicity="1" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypeOSSystemAssigns">
+              <PropertyRef Name="ProductTypeOSSystemAssignId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ProductTypeOSSystemAssignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_Colors">
+          <End Role="Colors" Type="Self.Colors" Multiplicity="0..1" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_HDDTypes">
+          <End Role="HDDTypes" Type="Self.HDDTypes" Multiplicity="0..1" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HDDTypes">
+              <PropertyRef Name="HDDTypeId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="HDDTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_ProductTypes">
+          <End Role="ProductTypes" Type="Self.ProductTypes" Multiplicity="1" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_ProductTypeStorageAssigns">
+          <End Role="ProductTypeStorageAssigns" Type="Self.ProductTypeStorageAssigns" Multiplicity="1" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypeStorageAssigns">
+              <PropertyRef Name="ProductTypeStorageAssignId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ProductTypeStorageAssignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_RAM">
+          <End Role="RAM" Type="Self.RAM" Multiplicity="0..1" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RAM">
+              <PropertyRef Name="RAMId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="RAMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_ScreenTypes">
+          <End Role="ScreenTypes" Type="Self.ScreenTypes" Multiplicity="0..1" />
+          <End Role="ProductSpecifications" Type="Self.ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScreenTypes">
+              <PropertyRef Name="ScreenTypeId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ScreenTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeFilterAssigns_FilterTypes">
+          <End Role="FilterTypes" Type="Self.FilterTypes" Multiplicity="1" />
+          <End Role="ProductTypeFilterAssigns" Type="Self.ProductTypeFilterAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FilterTypes">
+              <PropertyRef Name="FilterTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeFilterAssigns">
+              <PropertyRef Name="FilterTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeFilterAssigns_ProductTypes">
+          <End Role="ProductTypes" Type="Self.ProductTypes" Multiplicity="1" />
+          <End Role="ProductTypeFilterAssigns" Type="Self.ProductTypeFilterAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeFilterAssigns">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeManufacturerAssigns_Manufacturers">
           <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
-          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="*" />
+          <End Role="ProductTypeManufacturerAssigns" Type="Self.ProductTypeManufacturerAssigns" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Manufacturers">
               <PropertyRef Name="ManufacturerId" />
             </Principal>
-            <Dependent Role="PhoneSpecifications">
+            <Dependent Role="ProductTypeManufacturerAssigns">
               <PropertyRef Name="ManufacturerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PhoneSpecifications_OSSystems">
+        <Association Name="FK_ProductTypeManufacturerAssigns_ProductTypes">
+          <End Role="ProductTypes" Type="Self.ProductTypes" Multiplicity="1" />
+          <End Role="ProductTypeManufacturerAssigns" Type="Self.ProductTypeManufacturerAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeManufacturerAssigns">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeOSSystemAssigns_OSSystems">
           <End Role="OSSystems" Type="Self.OSSystems" Multiplicity="1" />
-          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="*" />
+          <End Role="ProductTypeOSSystemAssigns" Type="Self.ProductTypeOSSystemAssigns" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OSSystems">
               <PropertyRef Name="OSSystemId" />
             </Principal>
-            <Dependent Role="PhoneSpecifications">
+            <Dependent Role="ProductTypeOSSystemAssigns">
               <PropertyRef Name="OSSystemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductTypeOSSystemAssigns_ProductTypes">
+          <End Role="ProductTypes" Type="Self.ProductTypes" Multiplicity="1" />
+          <End Role="ProductTypeOSSystemAssigns" Type="Self.ProductTypeOSSystemAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeOSSystemAssigns">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeStorageAssigns_ProductTypes">
+          <End Role="ProductTypes" Type="Self.ProductTypes" Multiplicity="1" />
+          <End Role="ProductTypeStorageAssigns" Type="Self.ProductTypeStorageAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeStorageAssigns">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeStorageAssigns_Storages">
+          <End Role="Storages" Type="Self.Storages" Multiplicity="1" />
+          <End Role="ProductTypeStorageAssigns" Type="Self.ProductTypeStorageAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storages">
+              <PropertyRef Name="StorageId" />
+            </Principal>
+            <Dependent Role="ProductTypeStorageAssigns">
+              <PropertyRef Name="StorageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="Colors" EntityType="Self.Colors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FilterTypes" EntityType="Self.FilterTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HDDTypes" EntityType="Self.HDDTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OSSystems" EntityType="Self.OSSystems" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Phones" EntityType="Self.Phones" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PhoneSpecifications" EntityType="Self.PhoneSpecifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSpecifications" EntityType="Self.ProductSpecifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTypeFilterAssigns" EntityType="Self.ProductTypeFilterAssigns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTypeManufacturerAssigns" EntityType="Self.ProductTypeManufacturerAssigns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTypeOSSystemAssigns" EntityType="Self.ProductTypeOSSystemAssigns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTypes" EntityType="Self.ProductTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTypeStorageAssigns" EntityType="Self.ProductTypeStorageAssigns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RAM" EntityType="Self.RAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScreenTypes" EntityType="Self.ScreenTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storages" EntityType="Self.Storages" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Phones_PhoneSpecifications" Association="Self.FK_Phones_PhoneSpecifications">
-            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
-            <End Role="Phones" EntitySet="Phones" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_PhoneSpecifications_Manufacturers" Association="Self.FK_PhoneSpecifications_Manufacturers">
+          <AssociationSet Name="FK_PhoneSpecifications_ProductTypeManufacturerAssigns" Association="Self.FK_PhoneSpecifications_ProductTypeManufacturerAssigns">
+            <End Role="ProductTypeManufacturerAssigns" EntitySet="ProductTypeManufacturerAssigns" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneSpecifications_ProductTypeOSSystemAssigns" Association="Self.FK_PhoneSpecifications_ProductTypeOSSystemAssigns">
+            <End Role="ProductTypeOSSystemAssigns" EntitySet="ProductTypeOSSystemAssigns" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_Colors" Association="Self.FK_ProductSpecifications_Colors">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_HDDTypes" Association="Self.FK_ProductSpecifications_HDDTypes">
+            <End Role="HDDTypes" EntitySet="HDDTypes" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_ProductTypes" Association="Self.FK_ProductSpecifications_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_ProductTypeStorageAssigns" Association="Self.FK_ProductSpecifications_ProductTypeStorageAssigns">
+            <End Role="ProductTypeStorageAssigns" EntitySet="ProductTypeStorageAssigns" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_RAM" Association="Self.FK_ProductSpecifications_RAM">
+            <End Role="RAM" EntitySet="RAM" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_ScreenTypes" Association="Self.FK_ProductSpecifications_ScreenTypes">
+            <End Role="ScreenTypes" EntitySet="ScreenTypes" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeFilterAssigns_FilterTypes" Association="Self.FK_ProductTypeFilterAssigns_FilterTypes">
+            <End Role="FilterTypes" EntitySet="FilterTypes" />
+            <End Role="ProductTypeFilterAssigns" EntitySet="ProductTypeFilterAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeFilterAssigns_ProductTypes" Association="Self.FK_ProductTypeFilterAssigns_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductTypeFilterAssigns" EntitySet="ProductTypeFilterAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeManufacturerAssigns_Manufacturers" Association="Self.FK_ProductTypeManufacturerAssigns_Manufacturers">
             <End Role="Manufacturers" EntitySet="Manufacturers" />
-            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
+            <End Role="ProductTypeManufacturerAssigns" EntitySet="ProductTypeManufacturerAssigns" />
           </AssociationSet>
-          <AssociationSet Name="FK_PhoneSpecifications_OSSystems" Association="Self.FK_PhoneSpecifications_OSSystems">
+          <AssociationSet Name="FK_ProductTypeManufacturerAssigns_ProductTypes" Association="Self.FK_ProductTypeManufacturerAssigns_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductTypeManufacturerAssigns" EntitySet="ProductTypeManufacturerAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeOSSystemAssigns_OSSystems" Association="Self.FK_ProductTypeOSSystemAssigns_OSSystems">
             <End Role="OSSystems" EntitySet="OSSystems" />
-            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
+            <End Role="ProductTypeOSSystemAssigns" EntitySet="ProductTypeOSSystemAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeOSSystemAssigns_ProductTypes" Association="Self.FK_ProductTypeOSSystemAssigns_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductTypeOSSystemAssigns" EntitySet="ProductTypeOSSystemAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeStorageAssigns_ProductTypes" Association="Self.FK_ProductTypeStorageAssigns_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductTypeStorageAssigns" EntitySet="ProductTypeStorageAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeStorageAssigns_Storages" Association="Self.FK_ProductTypeStorageAssigns_Storages">
+            <End Role="Storages" EntitySet="Storages" />
+            <End Role="ProductTypeStorageAssigns" EntitySet="ProductTypeStorageAssigns" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Colors" EntityType="DBModel.Colors" />
+          <EntitySet Name="FilterTypes" EntityType="DBModel.FilterTypes" />
+          <EntitySet Name="HDDTypes" EntityType="DBModel.HDDTypes" />
+          <EntitySet Name="Manufacturers" EntityType="DBModel.Manufacturers" />
+          <EntitySet Name="OSSystems" EntityType="DBModel.OSSystems" />
+          <EntitySet Name="Products" EntityType="DBModel.Products" />
+          <EntitySet Name="ProductSpecifications" EntityType="DBModel.ProductSpecifications" />
+          <EntitySet Name="ProductTypeFilterAssigns" EntityType="DBModel.ProductTypeFilterAssigns" />
+          <EntitySet Name="ProductTypeManufacturerAssigns" EntityType="DBModel.ProductTypeManufacturerAssigns" />
+          <EntitySet Name="ProductTypeOSSystemAssigns" EntityType="DBModel.ProductTypeOSSystemAssigns" />
+          <EntitySet Name="ProductTypes" EntityType="DBModel.ProductTypes" />
+          <EntitySet Name="ProductTypeStorageAssigns" EntityType="DBModel.ProductTypeStorageAssigns" />
+          <EntitySet Name="RAM" EntityType="DBModel.RAM" />
+          <EntitySet Name="ScreenTypes" EntityType="DBModel.ScreenTypes" />
+          <EntitySet Name="Storages" EntityType="DBModel.Storages" />
+          <AssociationSet Name="FK_ProductSpecifications_Colors" Association="DBModel.FK_ProductSpecifications_Colors">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeFilterAssigns_FilterTypes" Association="DBModel.FK_ProductTypeFilterAssigns_FilterTypes">
+            <End Role="FilterTypes" EntitySet="FilterTypes" />
+            <End Role="ProductTypeFilterAssigns" EntitySet="ProductTypeFilterAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_HDDTypes" Association="DBModel.FK_ProductSpecifications_HDDTypes">
+            <End Role="HDDTypes" EntitySet="HDDTypes" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeManufacturerAssigns_Manufacturers" Association="DBModel.FK_ProductTypeManufacturerAssigns_Manufacturers">
+            <End Role="Manufacturers" EntitySet="Manufacturers" />
+            <End Role="ProductTypeManufacturerAssigns" EntitySet="ProductTypeManufacturerAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeOSSystemAssigns_OSSystems" Association="DBModel.FK_ProductTypeOSSystemAssigns_OSSystems">
+            <End Role="OSSystems" EntitySet="OSSystems" />
+            <End Role="ProductTypeOSSystemAssigns" EntitySet="ProductTypeOSSystemAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phones_PhoneSpecifications" Association="DBModel.FK_Phones_PhoneSpecifications">
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneSpecifications_ProductTypeManufacturerAssigns" Association="DBModel.FK_PhoneSpecifications_ProductTypeManufacturerAssigns">
+            <End Role="ProductTypeManufacturerAssigns" EntitySet="ProductTypeManufacturerAssigns" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneSpecifications_ProductTypeOSSystemAssigns" Association="DBModel.FK_PhoneSpecifications_ProductTypeOSSystemAssigns">
+            <End Role="ProductTypeOSSystemAssigns" EntitySet="ProductTypeOSSystemAssigns" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_ProductTypes" Association="DBModel.FK_ProductSpecifications_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_ProductTypeStorageAssigns" Association="DBModel.FK_ProductSpecifications_ProductTypeStorageAssigns">
+            <End Role="ProductTypeStorageAssigns" EntitySet="ProductTypeStorageAssigns" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_RAM" Association="DBModel.FK_ProductSpecifications_RAM">
+            <End Role="RAM" EntitySet="RAM" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecifications_ScreenTypes" Association="DBModel.FK_ProductSpecifications_ScreenTypes">
+            <End Role="ScreenTypes" EntitySet="ScreenTypes" />
+            <End Role="ProductSpecifications" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeFilterAssigns_ProductTypes" Association="DBModel.FK_ProductTypeFilterAssigns_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductTypeFilterAssigns" EntitySet="ProductTypeFilterAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeManufacturerAssigns_ProductTypes" Association="DBModel.FK_ProductTypeManufacturerAssigns_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductTypeManufacturerAssigns" EntitySet="ProductTypeManufacturerAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeOSSystemAssigns_ProductTypes" Association="DBModel.FK_ProductTypeOSSystemAssigns_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductTypeOSSystemAssigns" EntitySet="ProductTypeOSSystemAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeStorageAssigns_ProductTypes" Association="DBModel.FK_ProductTypeStorageAssigns_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="ProductTypeStorageAssigns" EntitySet="ProductTypeStorageAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeStorageAssigns_Storages" Association="DBModel.FK_ProductTypeStorageAssigns_Storages">
+            <End Role="Storages" EntitySet="Storages" />
+            <End Role="ProductTypeStorageAssigns" EntitySet="ProductTypeStorageAssigns" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Colors">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_ProductSpecifications_Colors" FromRole="Colors" ToRole="ProductSpecifications" />
+        </EntityType>
+        <EntityType Name="FilterTypes">
+          <Key>
+            <PropertyRef Name="FilterTypeId" />
+          </Key>
+          <Property Name="FilterTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FilterType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductTypeFilterAssigns" Relationship="DBModel.FK_ProductTypeFilterAssigns_FilterTypes" FromRole="FilterTypes" ToRole="ProductTypeFilterAssigns" />
+        </EntityType>
+        <EntityType Name="HDDTypes">
+          <Key>
+            <PropertyRef Name="HDDTypeId" />
+          </Key>
+          <Property Name="HDDTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HDDType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_ProductSpecifications_HDDTypes" FromRole="HDDTypes" ToRole="ProductSpecifications" />
+        </EntityType>
         <EntityType Name="Manufacturers">
           <Key>
             <PropertyRef Name="ManufacturerId" />
           </Key>
           <Property Name="ManufacturerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PhoneSpecifications" Relationship="Self.FK_PhoneSpecifications_Manufacturers" FromRole="Manufacturers" ToRole="PhoneSpecifications" />
+          <Property Name="Manufacturer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductTypeManufacturerAssigns" Relationship="DBModel.FK_ProductTypeManufacturerAssigns_Manufacturers" FromRole="Manufacturers" ToRole="ProductTypeManufacturerAssigns" />
         </EntityType>
         <EntityType Name="OSSystems">
           <Key>
             <PropertyRef Name="OSSystemId" />
           </Key>
           <Property Name="OSSystemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PhoneSpecifications" Relationship="Self.FK_PhoneSpecifications_OSSystems" FromRole="OSSystems" ToRole="PhoneSpecifications" />
+          <Property Name="OS" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductTypeOSSystemAssigns" Relationship="DBModel.FK_ProductTypeOSSystemAssigns_OSSystems" FromRole="OSSystems" ToRole="ProductTypeOSSystemAssigns" />
         </EntityType>
-        <EntityType Name="Phones">
+        <EntityType Name="Products">
           <Key>
-            <PropertyRef Name="PhoneId" />
+            <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="PhoneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
-          <Property Name="PhoneSpecificationId" Type="Int32" Nullable="false" />
-          <Property Name="SmallImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LargeImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PhoneSpecifications" Relationship="Self.FK_Phones_PhoneSpecifications" FromRole="Phones" ToRole="PhoneSpecifications" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="13" Scale="2" />
+          <Property Name="ProductSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="SmallImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LargeImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_Phones_PhoneSpecifications" FromRole="Products" ToRole="ProductSpecifications" />
         </EntityType>
-        <EntityType Name="PhoneSpecifications">
+        <EntityType Name="ProductSpecifications">
           <Key>
-            <PropertyRef Name="PhoneSpecificationId" />
+            <PropertyRef Name="ProductSpecificationId" />
           </Key>
-          <Property Name="PhoneSpecificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductSpecificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductTypeManufacturerAssignId" Type="Int32" Nullable="false" />
+          <Property Name="ProductTypeOSSystemAssignId" Type="Int32" Nullable="false" />
+          <Property Name="ProductTypeStorageAssignId" Type="Int32" Nullable="false" />
+          <Property Name="Camera" Type="Int32" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ScreenTypeId" Type="Int32" />
+          <Property Name="HDDTypeId" Type="Int32" />
+          <Property Name="RAMId" Type="Int32" />
+          <Property Name="ColorId" Type="Int32" />
+          <NavigationProperty Name="Colors" Relationship="DBModel.FK_ProductSpecifications_Colors" FromRole="ProductSpecifications" ToRole="Colors" />
+          <NavigationProperty Name="HDDTypes" Relationship="DBModel.FK_ProductSpecifications_HDDTypes" FromRole="ProductSpecifications" ToRole="HDDTypes" />
+          <NavigationProperty Name="Products" Relationship="DBModel.FK_Phones_PhoneSpecifications" FromRole="ProductSpecifications" ToRole="Products" />
+          <NavigationProperty Name="ProductTypeManufacturerAssigns" Relationship="DBModel.FK_PhoneSpecifications_ProductTypeManufacturerAssigns" FromRole="ProductSpecifications" ToRole="ProductTypeManufacturerAssigns" />
+          <NavigationProperty Name="ProductTypeOSSystemAssigns" Relationship="DBModel.FK_PhoneSpecifications_ProductTypeOSSystemAssigns" FromRole="ProductSpecifications" ToRole="ProductTypeOSSystemAssigns" />
+          <NavigationProperty Name="ProductTypes" Relationship="DBModel.FK_ProductSpecifications_ProductTypes" FromRole="ProductSpecifications" ToRole="ProductTypes" />
+          <NavigationProperty Name="ProductTypeStorageAssigns" Relationship="DBModel.FK_ProductSpecifications_ProductTypeStorageAssigns" FromRole="ProductSpecifications" ToRole="ProductTypeStorageAssigns" />
+          <NavigationProperty Name="RAM" Relationship="DBModel.FK_ProductSpecifications_RAM" FromRole="ProductSpecifications" ToRole="RAM" />
+          <NavigationProperty Name="ScreenTypes" Relationship="DBModel.FK_ProductSpecifications_ScreenTypes" FromRole="ProductSpecifications" ToRole="ScreenTypes" />
+        </EntityType>
+        <EntityType Name="ProductTypeFilterAssigns">
+          <Key>
+            <PropertyRef Name="ProductTypeFilterAssignId" />
+          </Key>
+          <Property Name="ProductTypeFilterAssignId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="FilterTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FilterTypes" Relationship="DBModel.FK_ProductTypeFilterAssigns_FilterTypes" FromRole="ProductTypeFilterAssigns" ToRole="FilterTypes" />
+          <NavigationProperty Name="ProductTypes" Relationship="DBModel.FK_ProductTypeFilterAssigns_ProductTypes" FromRole="ProductTypeFilterAssigns" ToRole="ProductTypes" />
+        </EntityType>
+        <EntityType Name="ProductTypeManufacturerAssigns">
+          <Key>
+            <PropertyRef Name="ProductTypeManufacturerAssignId" />
+          </Key>
+          <Property Name="ProductTypeManufacturerAssignId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
           <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
-          <Property Name="OSSystemId" Type="Int32" Nullable="false" />
-          <Property Name="Storage" Type="Int32" Nullable="false" />
-          <Property Name="Camera" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Manufacturers" Relationship="Self.FK_PhoneSpecifications_Manufacturers" FromRole="PhoneSpecifications" ToRole="Manufacturers" />
-          <NavigationProperty Name="OSSystems" Relationship="Self.FK_PhoneSpecifications_OSSystems" FromRole="PhoneSpecifications" ToRole="OSSystems" />
-          <NavigationProperty Name="Phones" Relationship="Self.FK_Phones_PhoneSpecifications" FromRole="PhoneSpecifications" ToRole="Phones" />
+          <NavigationProperty Name="Manufacturers" Relationship="DBModel.FK_ProductTypeManufacturerAssigns_Manufacturers" FromRole="ProductTypeManufacturerAssigns" ToRole="Manufacturers" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_PhoneSpecifications_ProductTypeManufacturerAssigns" FromRole="ProductTypeManufacturerAssigns" ToRole="ProductSpecifications" />
+          <NavigationProperty Name="ProductTypes" Relationship="DBModel.FK_ProductTypeManufacturerAssigns_ProductTypes" FromRole="ProductTypeManufacturerAssigns" ToRole="ProductTypes" />
         </EntityType>
-        <Association Name="FK_PhoneSpecifications_Manufacturers">
-          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
-          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="*" />
+        <EntityType Name="ProductTypeOSSystemAssigns">
+          <Key>
+            <PropertyRef Name="ProductTypeOSSystemAssignId" />
+          </Key>
+          <Property Name="ProductTypeOSSystemAssignId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="OSSystemId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OSSystems" Relationship="DBModel.FK_ProductTypeOSSystemAssigns_OSSystems" FromRole="ProductTypeOSSystemAssigns" ToRole="OSSystems" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_PhoneSpecifications_ProductTypeOSSystemAssigns" FromRole="ProductTypeOSSystemAssigns" ToRole="ProductSpecifications" />
+          <NavigationProperty Name="ProductTypes" Relationship="DBModel.FK_ProductTypeOSSystemAssigns_ProductTypes" FromRole="ProductTypeOSSystemAssigns" ToRole="ProductTypes" />
+        </EntityType>
+        <EntityType Name="ProductTypes">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ProductTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_ProductSpecifications_ProductTypes" FromRole="ProductTypes" ToRole="ProductSpecifications" />
+          <NavigationProperty Name="ProductTypeFilterAssigns" Relationship="DBModel.FK_ProductTypeFilterAssigns_ProductTypes" FromRole="ProductTypes" ToRole="ProductTypeFilterAssigns" />
+          <NavigationProperty Name="ProductTypeManufacturerAssigns" Relationship="DBModel.FK_ProductTypeManufacturerAssigns_ProductTypes" FromRole="ProductTypes" ToRole="ProductTypeManufacturerAssigns" />
+          <NavigationProperty Name="ProductTypeOSSystemAssigns" Relationship="DBModel.FK_ProductTypeOSSystemAssigns_ProductTypes" FromRole="ProductTypes" ToRole="ProductTypeOSSystemAssigns" />
+          <NavigationProperty Name="ProductTypeStorageAssigns" Relationship="DBModel.FK_ProductTypeStorageAssigns_ProductTypes" FromRole="ProductTypes" ToRole="ProductTypeStorageAssigns" />
+        </EntityType>
+        <EntityType Name="ProductTypeStorageAssigns">
+          <Key>
+            <PropertyRef Name="ProductTypeStorageAssignId" />
+          </Key>
+          <Property Name="ProductTypeStorageAssignId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="StorageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_ProductSpecifications_ProductTypeStorageAssigns" FromRole="ProductTypeStorageAssigns" ToRole="ProductSpecifications" />
+          <NavigationProperty Name="ProductTypes" Relationship="DBModel.FK_ProductTypeStorageAssigns_ProductTypes" FromRole="ProductTypeStorageAssigns" ToRole="ProductTypes" />
+          <NavigationProperty Name="Storages" Relationship="DBModel.FK_ProductTypeStorageAssigns_Storages" FromRole="ProductTypeStorageAssigns" ToRole="Storages" />
+        </EntityType>
+        <EntityType Name="RAM">
+          <Key>
+            <PropertyRef Name="RAMId" />
+          </Key>
+          <Property Name="RAMId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RAM1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_ProductSpecifications_RAM" FromRole="RAM" ToRole="ProductSpecifications" />
+        </EntityType>
+        <EntityType Name="ScreenTypes">
+          <Key>
+            <PropertyRef Name="ScreenTypeId" />
+          </Key>
+          <Property Name="ScreenTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScreenType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="DBModel.FK_ProductSpecifications_ScreenTypes" FromRole="ScreenTypes" ToRole="ProductSpecifications" />
+        </EntityType>
+        <EntityType Name="Storages">
+          <Key>
+            <PropertyRef Name="StorageId" />
+          </Key>
+          <Property Name="StorageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Storage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductTypeStorageAssigns" Relationship="DBModel.FK_ProductTypeStorageAssigns_Storages" FromRole="Storages" ToRole="ProductTypeStorageAssigns" />
+        </EntityType>
+        <Association Name="FK_ProductSpecifications_Colors">
+          <End Type="DBModel.Colors" Role="Colors" Multiplicity="0..1" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeFilterAssigns_FilterTypes">
+          <End Type="DBModel.FilterTypes" Role="FilterTypes" Multiplicity="1" />
+          <End Type="DBModel.ProductTypeFilterAssigns" Role="ProductTypeFilterAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FilterTypes">
+              <PropertyRef Name="FilterTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeFilterAssigns">
+              <PropertyRef Name="FilterTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_HDDTypes">
+          <End Type="DBModel.HDDTypes" Role="HDDTypes" Multiplicity="0..1" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HDDTypes">
+              <PropertyRef Name="HDDTypeId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="HDDTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeManufacturerAssigns_Manufacturers">
+          <End Type="DBModel.Manufacturers" Role="Manufacturers" Multiplicity="1" />
+          <End Type="DBModel.ProductTypeManufacturerAssigns" Role="ProductTypeManufacturerAssigns" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Manufacturers">
               <PropertyRef Name="ManufacturerId" />
             </Principal>
-            <Dependent Role="PhoneSpecifications">
+            <Dependent Role="ProductTypeManufacturerAssigns">
               <PropertyRef Name="ManufacturerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PhoneSpecifications_OSSystems">
-          <End Role="OSSystems" Type="Self.OSSystems" Multiplicity="1" />
-          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="*" />
+        <Association Name="FK_ProductTypeOSSystemAssigns_OSSystems">
+          <End Type="DBModel.OSSystems" Role="OSSystems" Multiplicity="1" />
+          <End Type="DBModel.ProductTypeOSSystemAssigns" Role="ProductTypeOSSystemAssigns" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OSSystems">
               <PropertyRef Name="OSSystemId" />
             </Principal>
-            <Dependent Role="PhoneSpecifications">
+            <Dependent Role="ProductTypeOSSystemAssigns">
               <PropertyRef Name="OSSystemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Phones_PhoneSpecifications">
-          <End Role="PhoneSpecifications" Type="Self.PhoneSpecifications" Multiplicity="1" />
-          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="1" />
+          <End Type="DBModel.Products" Role="Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PhoneSpecifications">
-              <PropertyRef Name="PhoneSpecificationId" />
+            <Principal Role="ProductSpecifications">
+              <PropertyRef Name="ProductSpecificationId" />
             </Principal>
-            <Dependent Role="Phones">
-              <PropertyRef Name="PhoneSpecificationId" />
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductSpecificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" />
-          <EntitySet Name="OSSystems" EntityType="Self.OSSystems" />
-          <EntitySet Name="Phones" EntityType="Self.Phones" />
-          <EntitySet Name="PhoneSpecifications" EntityType="Self.PhoneSpecifications" />
-          <AssociationSet Name="FK_PhoneSpecifications_Manufacturers" Association="Self.FK_PhoneSpecifications_Manufacturers">
-            <End Role="Manufacturers" EntitySet="Manufacturers" />
-            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PhoneSpecifications_OSSystems" Association="Self.FK_PhoneSpecifications_OSSystems">
-            <End Role="OSSystems" EntitySet="OSSystems" />
-            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Phones_PhoneSpecifications" Association="Self.FK_Phones_PhoneSpecifications">
-            <End Role="PhoneSpecifications" EntitySet="PhoneSpecifications" />
-            <End Role="Phones" EntitySet="Phones" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <Association Name="FK_PhoneSpecifications_ProductTypeManufacturerAssigns">
+          <End Type="DBModel.ProductTypeManufacturerAssigns" Role="ProductTypeManufacturerAssigns" Multiplicity="1" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypeManufacturerAssigns">
+              <PropertyRef Name="ProductTypeManufacturerAssignId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ProductTypeManufacturerAssignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhoneSpecifications_ProductTypeOSSystemAssigns">
+          <End Type="DBModel.ProductTypeOSSystemAssigns" Role="ProductTypeOSSystemAssigns" Multiplicity="1" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypeOSSystemAssigns">
+              <PropertyRef Name="ProductTypeOSSystemAssignId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ProductTypeOSSystemAssignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_ProductTypes">
+          <End Type="DBModel.ProductTypes" Role="ProductTypes" Multiplicity="1" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_ProductTypeStorageAssigns">
+          <End Type="DBModel.ProductTypeStorageAssigns" Role="ProductTypeStorageAssigns" Multiplicity="1" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypeStorageAssigns">
+              <PropertyRef Name="ProductTypeStorageAssignId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ProductTypeStorageAssignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_RAM">
+          <End Type="DBModel.RAM" Role="RAM" Multiplicity="0..1" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RAM">
+              <PropertyRef Name="RAMId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="RAMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecifications_ScreenTypes">
+          <End Type="DBModel.ScreenTypes" Role="ScreenTypes" Multiplicity="0..1" />
+          <End Type="DBModel.ProductSpecifications" Role="ProductSpecifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScreenTypes">
+              <PropertyRef Name="ScreenTypeId" />
+            </Principal>
+            <Dependent Role="ProductSpecifications">
+              <PropertyRef Name="ScreenTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeFilterAssigns_ProductTypes">
+          <End Type="DBModel.ProductTypes" Role="ProductTypes" Multiplicity="1" />
+          <End Type="DBModel.ProductTypeFilterAssigns" Role="ProductTypeFilterAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeFilterAssigns">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeManufacturerAssigns_ProductTypes">
+          <End Type="DBModel.ProductTypes" Role="ProductTypes" Multiplicity="1" />
+          <End Type="DBModel.ProductTypeManufacturerAssigns" Role="ProductTypeManufacturerAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeManufacturerAssigns">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeOSSystemAssigns_ProductTypes">
+          <End Type="DBModel.ProductTypes" Role="ProductTypes" Multiplicity="1" />
+          <End Type="DBModel.ProductTypeOSSystemAssigns" Role="ProductTypeOSSystemAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeOSSystemAssigns">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeStorageAssigns_ProductTypes">
+          <End Type="DBModel.ProductTypes" Role="ProductTypes" Multiplicity="1" />
+          <End Type="DBModel.ProductTypeStorageAssigns" Role="ProductTypeStorageAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ProductTypeStorageAssigns">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeStorageAssigns_Storages">
+          <End Type="DBModel.Storages" Role="Storages" Multiplicity="1" />
+          <End Type="DBModel.ProductTypeStorageAssigns" Role="ProductTypeStorageAssigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storages">
+              <PropertyRef Name="StorageId" />
+            </Principal>
+            <Dependent Role="ProductTypeStorageAssigns">
+              <PropertyRef Name="StorageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="DBModel.Colors">
+              <MappingFragment StoreEntitySet="Colors">
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FilterTypes">
+            <EntityTypeMapping TypeName="DBModel.FilterTypes">
+              <MappingFragment StoreEntitySet="FilterTypes">
+                <ScalarProperty Name="FilterType" ColumnName="FilterType" />
+                <ScalarProperty Name="FilterTypeId" ColumnName="FilterTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HDDTypes">
+            <EntityTypeMapping TypeName="DBModel.HDDTypes">
+              <MappingFragment StoreEntitySet="HDDTypes">
+                <ScalarProperty Name="HDDType" ColumnName="HDDType" />
+                <ScalarProperty Name="HDDTypeId" ColumnName="HDDTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Manufacturers">
             <EntityTypeMapping TypeName="DBModel.Manufacturers">
               <MappingFragment StoreEntitySet="Manufacturers">
-                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
                 <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OSSystems">
             <EntityTypeMapping TypeName="DBModel.OSSystems">
               <MappingFragment StoreEntitySet="OSSystems">
-                <ScalarProperty Name="OSSystemId" ColumnName="OSSystemId" />
                 <ScalarProperty Name="OS" ColumnName="OS" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Phones">
-            <EntityTypeMapping TypeName="DBModel.Phones">
-              <MappingFragment StoreEntitySet="Phones">
-                <ScalarProperty Name="PhoneId" ColumnName="PhoneId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="PhoneSpecificationId" ColumnName="PhoneSpecificationId" />
-                <ScalarProperty Name="SmallImage" ColumnName="SmallImage" />
-                <ScalarProperty Name="LargeImage" ColumnName="LargeImage" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PhoneSpecifications">
-            <EntityTypeMapping TypeName="DBModel.PhoneSpecifications">
-              <MappingFragment StoreEntitySet="PhoneSpecifications">
-                <ScalarProperty Name="PhoneSpecificationId" ColumnName="PhoneSpecificationId" />
-                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
                 <ScalarProperty Name="OSSystemId" ColumnName="OSSystemId" />
-                <ScalarProperty Name="Storage" ColumnName="Storage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DBModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="LargeImage" ColumnName="LargeImage" />
+                <ScalarProperty Name="SmallImage" ColumnName="SmallImage" />
+                <ScalarProperty Name="ProductSpecificationId" ColumnName="ProductSpecificationId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSpecifications">
+            <EntityTypeMapping TypeName="DBModel.ProductSpecifications">
+              <MappingFragment StoreEntitySet="ProductSpecifications">
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="RAMId" ColumnName="RAMId" />
+                <ScalarProperty Name="HDDTypeId" ColumnName="HDDTypeId" />
+                <ScalarProperty Name="ScreenTypeId" ColumnName="ScreenTypeId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
                 <ScalarProperty Name="Camera" ColumnName="Camera" />
+                <ScalarProperty Name="ProductTypeStorageAssignId" ColumnName="ProductTypeStorageAssignId" />
+                <ScalarProperty Name="ProductTypeOSSystemAssignId" ColumnName="ProductTypeOSSystemAssignId" />
+                <ScalarProperty Name="ProductTypeManufacturerAssignId" ColumnName="ProductTypeManufacturerAssignId" />
+                <ScalarProperty Name="ProductSpecificationId" ColumnName="ProductSpecificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypeFilterAssigns">
+            <EntityTypeMapping TypeName="DBModel.ProductTypeFilterAssigns">
+              <MappingFragment StoreEntitySet="ProductTypeFilterAssigns">
+                <ScalarProperty Name="FilterTypeId" ColumnName="FilterTypeId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductTypeFilterAssignId" ColumnName="ProductTypeFilterAssignId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypeManufacturerAssigns">
+            <EntityTypeMapping TypeName="DBModel.ProductTypeManufacturerAssigns">
+              <MappingFragment StoreEntitySet="ProductTypeManufacturerAssigns">
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductTypeManufacturerAssignId" ColumnName="ProductTypeManufacturerAssignId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypeOSSystemAssigns">
+            <EntityTypeMapping TypeName="DBModel.ProductTypeOSSystemAssigns">
+              <MappingFragment StoreEntitySet="ProductTypeOSSystemAssigns">
+                <ScalarProperty Name="OSSystemId" ColumnName="OSSystemId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductTypeOSSystemAssignId" ColumnName="ProductTypeOSSystemAssignId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="DBModel.ProductTypes">
+              <MappingFragment StoreEntitySet="ProductTypes">
+                <ScalarProperty Name="ProductTypeName" ColumnName="ProductTypeName" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypeStorageAssigns">
+            <EntityTypeMapping TypeName="DBModel.ProductTypeStorageAssigns">
+              <MappingFragment StoreEntitySet="ProductTypeStorageAssigns">
+                <ScalarProperty Name="StorageId" ColumnName="StorageId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductTypeStorageAssignId" ColumnName="ProductTypeStorageAssignId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RAM">
+            <EntityTypeMapping TypeName="DBModel.RAM">
+              <MappingFragment StoreEntitySet="RAM">
+                <ScalarProperty Name="RAM1" ColumnName="RAM" />
+                <ScalarProperty Name="RAMId" ColumnName="RAMId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScreenTypes">
+            <EntityTypeMapping TypeName="DBModel.ScreenTypes">
+              <MappingFragment StoreEntitySet="ScreenTypes">
+                <ScalarProperty Name="ScreenType" ColumnName="ScreenType" />
+                <ScalarProperty Name="ScreenTypeId" ColumnName="ScreenTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storages">
+            <EntityTypeMapping TypeName="DBModel.Storages">
+              <MappingFragment StoreEntitySet="Storages">
+                <ScalarProperty Name="Storage" ColumnName="Storage" />
+                <ScalarProperty Name="StorageId" ColumnName="StorageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
