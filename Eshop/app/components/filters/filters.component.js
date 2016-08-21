@@ -19,6 +19,7 @@
                     self.filters = [];
                     self.isLoading = true;
                     self.filterSource = Products.query(function (data) { self.isLoading = false; });
+                    self.price = "";
                 }
 
                 self.filter = function () {
