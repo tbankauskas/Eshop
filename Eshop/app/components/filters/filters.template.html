@@ -1,0 +1,30 @@
+﻿<div class="filters" ng-show="$ctrl.isLoaded">
+    <form id="formFilters">
+        <div class="filter-criteria">
+            <span>Product Types</span>
+            <label ng-repeat="productType in $ctrl.productTypes">
+                <input type="checkbox"
+                       ng-click="$ctrl.productTypesSelect($ctrl.productTypes)"
+                       ng-model="productType.isSelected"
+                       name="productType" />{{productType.productTypeName}}
+            </label>
+        </div>
+
+        <div class="filter-criteria" ng-repeat="filter in $ctrl.filters">
+            <span>{{filter.filterType}}</span>
+            <label ng-repeat="value in filter.filterValues">
+                <input type="checkbox"
+                       ng-model="value.isSelected"
+                       name="{{filter.filterType}}" />{{value.filterValueName}}
+            </label>
+        </div>
+        <div class="filter-criteria">
+            <span>Price</span>
+            <input type="number" ng-model="$ctrl.price" class="price-input" />
+        </div>
+        <div class="filer-buttons">
+            <button type="button" id="filter" ng-click="$ctrl.filter()" class="btn btn-primary">Filter</button>
+            <button id="clear_filters" ng-click="$ctrl.clearFilters()" class="btn btn-primary">Clear</button>
+        </div>
+    </form>
+</div>

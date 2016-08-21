@@ -1,0 +1,16 @@
+﻿<ul id="productList" class="products-list">
+    <li ng-repeat="product in $ctrl.itemsSource">
+        <a href="#" ng-click="$ctrl.getProductDetails(product)">
+            <div class="product-photo">
+                <img ng-src="{{product.image.smallImage}}" height="130" />
+            </div>
+            <h2>{{product.name}}</h2>
+            <div class="product-description">
+                <p class="product-price">{{product.price}}<span>&#8364</span></p>
+            </div>
+            <div class="highlight"></div>
+        </a>
+        <button class="btn btn-primary">Buy</button>
+
+    </li>
+</ul>

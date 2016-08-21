@@ -1,0 +1,27 @@
+﻿<div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main-menu">
+            <ul class="nav navbar-nav" id="main-menu-left">
+                <li><h1>E-Shop</h1></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<div class="main-content" ng-controller="RootController as root">
+    <div class="all-products page visible">
+
+        <!-- Filters -->
+        <filters filter-source="root.products" is-loading="root.isLoading"></filters>
+
+        <!-- Product in catalog -->
+        <products items-source="root.products"></products>
+
+        <div id="loading" class="busyIndicator" ng-show="root.isLoading"></div>
+    </div>
+    <!-- Product view -->
+    <div class="single-product page" id="singleProduct">
+
+    </div>
+</div>

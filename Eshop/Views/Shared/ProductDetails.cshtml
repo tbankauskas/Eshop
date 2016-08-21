@@ -1,0 +1,38 @@
+﻿@model Eshop.Models.Product
+<div class="overlay"></div>
+<div class="preview-large">
+    <h3>@Model.Name</h3>
+    <img src=@Model.Image.LargeImage />
+    <p>Specifications</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4 right">Manufacturer:</div>
+            <div class="col-xs-4 left">@Model.Specs.Manufacturer </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 right">Operating system:</div>
+            <div class="col-xs-4 left"> @Model.Specs.Os</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 right">Storage:</div>
+            <div class="col-xs-4 left">@Model.Specs.Storage</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 right">Camera:</div>
+            <div class="col-xs-4 left">@Model.Specs.Camera </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 right"><b>Price:</b></div>
+            <div class="col-xs-4 left"><b>@Model.Price &#8364</b></div>
+        </div>
+    </div>
+    <span id="close" class="close">×</span><br />
+
+</div>
+
+<script type="text/javascript">
+    $('#close').click(function (e) {
+        $('.main-content .page').addClass('visible');
+        $('#singleProduct').removeClass('visible');
+    });
+</script>
